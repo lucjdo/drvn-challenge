@@ -2,15 +2,21 @@ import { Component, Input } from '@angular/core';
 import { MatTableModule } from '@angular/material/table';
 import { DisplayedProduct } from '../../models/product-model';
 import { StockColorDirective } from '../../directives/stock-color.directive';
+import { DecimalPipe } from '@angular/common';
+
+type Currency = 'USD' | 'EUR';
 
 @Component({
   selector: 'app-product-table',
-  imports: [MatTableModule, StockColorDirective],
+  imports: [MatTableModule, StockColorDirective, DecimalPipe],
   templateUrl: './product-table.component.html',
   styleUrls: ['./product-table.component.scss'],
 })
 export class ProductTableComponent {
   @Input() products: DisplayedProduct[] = [];
+
+  private currentCurrency: Currency = 'USD';
+  private readonly EUR_RATE = 0.92;
 
   displayedColumns: string[] = [
     'thumbnail',
@@ -24,5 +30,18 @@ export class ProductTableComponent {
 
   get dataSource() {
     return this.products;
+  }
+
+  getCurrencySymbol(): string {
+    return this.currentCurrency === 'USD' ? '$' : '€';
+  }
+
+  toggleCurrency(): void {
+    console.log('toggleCurrency');
+    this.currentCurrency = this.currentCurrency === 'USD' ? 'EUR' : 'USD';
+  }
+
+  getDisplayPrice(price: number): number {
+    return this.currentCurrency === 'USD' ? price : price * this.EUR_RATE;
   }
 }
