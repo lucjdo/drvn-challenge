@@ -1,5 +1,5 @@
 import { Component, Input, ViewChild } from '@angular/core';
-import { MatTableModule } from '@angular/material/table';
+import { MatTableModule, MatTableDataSource } from '@angular/material/table';
 import {
   MatPaginatorModule,
   MatPaginator,
@@ -9,7 +9,6 @@ import { DisplayedProduct } from '../../models/product-model';
 import { StockColorDirective } from '../../directives/stock-color.directive';
 import { DecimalPipe } from '@angular/common';
 import { Router } from '@angular/router';
-import { MatTableDataSource } from '@angular/material/table';
 
 type Currency = 'USD' | 'EUR';
 
@@ -17,9 +16,9 @@ type Currency = 'USD' | 'EUR';
   selector: 'app-product-table',
   imports: [
     MatTableModule,
+    MatPaginatorModule,
     StockColorDirective,
     DecimalPipe,
-    MatPaginatorModule,
   ],
   templateUrl: './product-table.component.html',
   styleUrls: ['./product-table.component.scss'],
@@ -30,10 +29,9 @@ export class ProductTableComponent {
 
   private currentCurrency: Currency = 'USD';
   private readonly EUR_RATE = 1.08;
-
-  dataSource = new MatTableDataSource<DisplayedProduct>(this.products);
   pageSize = 10;
-  pageSizeOptions: number[] = [5, 10, 25, 100];
+  pageSizeOptions: number[] = [10, 25, 50, 100];
+  dataSource!: MatTableDataSource<DisplayedProduct>;
 
   constructor(private router: Router) {}
 
@@ -46,6 +44,10 @@ export class ProductTableComponent {
     'rating',
     'actions',
   ];
+
+  ngOnInit() {
+    this.dataSource = new MatTableDataSource<DisplayedProduct>(this.products);
+  }
 
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
@@ -71,10 +73,7 @@ export class ProductTableComponent {
   }
 
   navigateToDetails(id: number): void {
+    console.log('navigateToDetails', id);
     this.router.navigate([`/products/${id}`]);
-  }
-
-  onPageChange(event: PageEvent) {
-    this.pageSize = event.pageSize;
   }
 }
