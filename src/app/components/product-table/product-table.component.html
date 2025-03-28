@@ -59,3 +59,11 @@
   <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 </table>
 
+<mat-paginator
+  [pageSizeOptions]="pageSizeOptions"
+  [pageSize]="pageSize"
+  showFirstLastButtons
+  aria-label="Select page of products"
+  (page)="onPageChange($event)">
+</mat-paginator>
+
