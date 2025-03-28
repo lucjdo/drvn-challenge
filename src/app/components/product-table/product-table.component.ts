@@ -3,6 +3,7 @@ import { MatTableModule } from '@angular/material/table';
 import { DisplayedProduct } from '../../models/product-model';
 import { StockColorDirective } from '../../directives/stock-color.directive';
 import { DecimalPipe } from '@angular/common';
+import { Router } from '@angular/router';
 
 type Currency = 'USD' | 'EUR';
 
@@ -16,7 +17,9 @@ export class ProductTableComponent {
   @Input() products: DisplayedProduct[] = [];
 
   private currentCurrency: Currency = 'USD';
-  private readonly EUR_RATE = 0.92;
+  private readonly EUR_RATE = 1.08;
+
+  constructor(private router: Router) {}
 
   displayedColumns: string[] = [
     'thumbnail',
@@ -43,5 +46,10 @@ export class ProductTableComponent {
 
   getDisplayPrice(price: number): number {
     return this.currentCurrency === 'USD' ? price : price * this.EUR_RATE;
+  }
+
+  navigateToDetails(id: number): void {
+    console.log('navigateToDetails', id);
+    this.router.navigate([`/products/${id}`]);
   }
 }
