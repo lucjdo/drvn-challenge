@@ -1,0 +1,14 @@
+<mat-button-toggle-group name="fontStyle" aria-label="Font Style">
+  <mat-button-toggle
+    [checked]="currencyService.getCurrentCurrency() === 'USD'"
+    value="USD"
+    (click)="setCurrency('USD')"
+    >USD</mat-button-toggle
+  >
+  <mat-button-toggle
+    [checked]="currencyService.getCurrentCurrency() === 'EUR'"
+    value="EUR"
+    (click)="setCurrency('EUR')"
+    >EUR</mat-button-toggle
+  >
+</mat-button-toggle-group>
