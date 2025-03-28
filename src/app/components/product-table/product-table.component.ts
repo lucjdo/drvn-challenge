@@ -1,4 +1,4 @@
-import { Component, Input, ViewChild } from '@angular/core';
+import { Component, Input, ViewChild, OnInit } from '@angular/core';
 import { MatTableModule, MatTableDataSource } from '@angular/material/table';
 import {
   MatPaginatorModule,
@@ -12,8 +12,8 @@ import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-
-type Currency = 'USD' | 'EUR';
+import { CurrencyService } from '../../services/currency.service';
+import { CurrencySelectorComponent } from '../currency-selector/currency-selector.component';
 
 @Component({
   selector: 'app-product-table',
@@ -25,22 +25,24 @@ type Currency = 'USD' | 'EUR';
     FormsModule,
     MatFormFieldModule,
     MatInputModule,
+    CurrencySelectorComponent,
   ],
   templateUrl: './product-table.component.html',
   styleUrls: ['./product-table.component.scss'],
 })
-export class ProductTableComponent {
+export class ProductTableComponent implements OnInit {
   @Input() products: DisplayedProduct[] = [];
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
-  private currentCurrency: Currency = 'USD';
-  private readonly EUR_RATE = 1.08;
   pageSize = 10;
   pageSizeOptions: number[] = [10, 25, 50, 100];
   dataSource!: MatTableDataSource<DisplayedProduct>;
   filterValue: string = '';
 
-  constructor(private router: Router) {}
+  constructor(
+    private router: Router,
+    public currencyService: CurrencyService
+  ) {}
 
   displayedColumns: string[] = [
     'thumbnail',
@@ -52,50 +54,30 @@ export class ProductTableComponent {
     'actions',
   ];
 
-  ngOnInit() {
-    this.dataSource = new MatTableDataSource<DisplayedProduct>(this.products);
-    this.dataSource.filterPredicate = (
-      data: DisplayedProduct,
-      filter: string
-    ) => {
-      return data.title.toLowerCase().includes(filter.toLowerCase());
-    };
-  }
-
-  ngAfterViewInit() {
+  ngOnInit(): void {
+    this.dataSource = new MatTableDataSource(this.products);
     this.dataSource.paginator = this.paginator;
   }
 
-  ngOnChanges() {
-    if (this.dataSource) {
-      this.dataSource.data = this.products;
-    }
-  }
-
-  applyFilter(event: Event) {
+  applyFilter(event: Event): void {
     const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim();
+    this.filterValue = filterValue;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
 
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
     }
   }
 
-  getCurrencySymbol(): string {
-    return this.currentCurrency === 'USD' ? '$' : '€';
-  }
-
-  toggleCurrency(): void {
-    console.log('toggleCurrency');
-    this.currentCurrency = this.currentCurrency === 'USD' ? 'EUR' : 'USD';
-  }
-
   getDisplayPrice(price: number): number {
-    return this.currentCurrency === 'USD' ? price : price * this.EUR_RATE;
+    return this.currencyService.convertPrice(price);
+  }
+
+  getCurrencySymbol(): string {
+    return this.currencyService.getCurrencySymbol();
   }
 
   navigateToDetails(id: number): void {
-    console.log('navigateToDetails', id);
-    this.router.navigate([`/products/${id}`]);
+    this.router.navigate(['/product', id]);
   }
 }
