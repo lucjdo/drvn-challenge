@@ -31,7 +31,6 @@ export class SidebarComponent {
   }
 
   getCategoryLabel(category: Category): string {
-    console.log(category);
     return category.charAt(0).toUpperCase() + category.slice(1);
   }
 }

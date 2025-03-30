@@ -9,7 +9,12 @@
 
   <div *ngIf="product" class="product-content">
     <div class="product-header">
-      <h1>{{ product.title }}</h1>
+      <div class="header-content">
+        <h1>{{ product.title }}</h1>
+        <button mat-raised-button color="primary" (click)="openEditModal()">
+          Edit Product
+        </button>
+      </div>
       <div class="product-meta">
         <span class="brand">{{ product.brand }}</span>
         <span class="category">{{ product.category }}</span>
@@ -36,7 +41,7 @@
       </div>
 
       <div class="stock-info">
-        <span [class]="'status ' + product.availabilityStatus.toLowerCase()">
+        <span [class]="'status'">
           {{ product.availabilityStatus }}
         </span>
         <span>Stock: {{ product.stock }}</span>
