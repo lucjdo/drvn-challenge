@@ -1,6 +1,7 @@
 <div class="table-container">  
 
   <div class="table-container__controls">
+    <h2 class="table-controls__title">{{ category === 'all' ? 'All products' : (category | titlecase) + ' Products' }}</h2>
     <mat-form-field class="table-controls__filter">
       <mat-label>Filter by product name</mat-label>
       <input matInput (keyup)="applyFilter($event)" placeholder="Search products..." #input>

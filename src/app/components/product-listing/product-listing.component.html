@@ -1,6 +1,3 @@
 <div class="product-listing">
-  <h2 class="product-listing__title">
-    {{ currentCategory === 'all' ? 'All Products' : (currentCategory | titlecase) + ' Products' }}
-  </h2>
-  <app-product-table [products]="products"></app-product-table>
+  <app-product-table [products]="products" [category]="currentCategory"></app-product-table>
 </div> 

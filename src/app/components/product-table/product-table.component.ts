@@ -14,7 +14,7 @@ import {
 } from '@angular/material/paginator';
 import { DisplayedProduct } from '../../models/product-model';
 import { StockColorDirective } from '../../directives/stock-color.directive';
-import { DecimalPipe } from '@angular/common';
+import { DecimalPipe, CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -26,6 +26,7 @@ import { CurrencySelectorComponent } from '../currency-selector/currency-selecto
   selector: 'app-product-table',
   standalone: true,
   imports: [
+    CommonModule,
     MatTableModule,
     MatPaginatorModule,
     StockColorDirective,
@@ -40,6 +41,7 @@ import { CurrencySelectorComponent } from '../currency-selector/currency-selecto
 })
 export class ProductTableComponent implements OnInit, OnChanges {
   @Input() products: DisplayedProduct[] = [];
+  @Input() category: string = '';
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   pageSize = 10;
