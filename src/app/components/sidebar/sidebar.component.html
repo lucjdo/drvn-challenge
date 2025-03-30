@@ -1,0 +1,16 @@
+<nav class="sidebar">
+  <div class="sidebar__header">
+    <h2>Categories</h2>
+  </div>
+  
+  <mat-nav-list class="sidebar__list">
+    <a mat-list-item 
+       *ngFor="let category of categories" 
+       [routerLink]="['/products']" 
+       [queryParams]="{ category: category }"
+       class="sidebar__item">
+      <mat-icon matListItemIcon>{{ getCategoryIcon(category) }}</mat-icon>
+      <span matListItemTitle>{{ getCategoryLabel(category) }}</span>
+    </a>
+  </mat-nav-list>
+</nav> 

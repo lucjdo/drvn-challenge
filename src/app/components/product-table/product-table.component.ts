@@ -1,4 +1,11 @@
-import { Component, Input, ViewChild, OnInit } from '@angular/core';
+import {
+  Component,
+  Input,
+  ViewChild,
+  OnInit,
+  OnChanges,
+  SimpleChanges,
+} from '@angular/core';
 import { MatTableModule, MatTableDataSource } from '@angular/material/table';
 import {
   MatPaginatorModule,
@@ -17,6 +24,7 @@ import { CurrencySelectorComponent } from '../currency-selector/currency-selecto
 
 @Component({
   selector: 'app-product-table',
+  standalone: true,
   imports: [
     MatTableModule,
     MatPaginatorModule,
@@ -30,7 +38,7 @@ import { CurrencySelectorComponent } from '../currency-selector/currency-selecto
   templateUrl: './product-table.component.html',
   styleUrls: ['./product-table.component.scss'],
 })
-export class ProductTableComponent implements OnInit {
+export class ProductTableComponent implements OnInit, OnChanges {
   @Input() products: DisplayedProduct[] = [];
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
@@ -55,8 +63,23 @@ export class ProductTableComponent implements OnInit {
   ];
 
   ngOnInit(): void {
+    this.initializeDataSource();
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['products'] && !changes['products'].firstChange) {
+      this.initializeDataSource();
+    }
+  }
+
+  private initializeDataSource(): void {
     this.dataSource = new MatTableDataSource(this.products);
     this.dataSource.paginator = this.paginator;
+
+    // Apply existing filter if any
+    if (this.filterValue) {
+      this.dataSource.filter = this.filterValue.trim().toLowerCase();
+    }
   }
 
   applyFilter(event: Event): void {

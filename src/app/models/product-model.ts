@@ -34,6 +34,7 @@ export enum AvailabilityStatus {
 }
 
 export enum Category {
+  All = 'all',
   Beauty = 'beauty',
   Fragrances = 'fragrances',
   Furniture = 'furniture',
