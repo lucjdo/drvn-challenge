@@ -8,7 +8,6 @@ import { ProductResponse, Product } from '../models/product-model';
 })
 export class ProductService {
   private apiUrl = 'https://dummyjson.com/products';
-  public editedProduct: Product | null = null;
 
   constructor(private http: HttpClient) {}
 
@@ -27,7 +26,6 @@ export class ProductService {
     // TODO: Implement the actual update request
 
     const updatedProduct = { ...product, ...updates };
-    this.editedProduct = updatedProduct;
 
     return of(updatedProduct);
   }
