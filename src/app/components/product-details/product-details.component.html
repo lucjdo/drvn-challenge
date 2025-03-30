@@ -1,0 +1,82 @@
+<div class="product-details">
+  <div *ngIf="loading" class="loading">
+    Loading product details...
+  </div>
+
+  <div *ngIf="error" class="error">
+    {{ error }}
+  </div>
+
+  <div *ngIf="product" class="product-content">
+    <div class="product-header">
+      <div class="header-content">
+        <h1>{{ product.title }}</h1>
+        <button mat-raised-button color="primary" (click)="openEditModal()">
+          Edit Product
+        </button>
+      </div>
+      <div class="product-meta">
+        <span class="brand">{{ product.brand }}</span>
+        <span class="category">{{ product.category }}</span>
+        <span class="rating">Rating: {{ product.rating }}/5</span>
+      </div>
+    </div>
+
+    <div class="product-gallery">
+      <img [src]="product.thumbnail" [alt]="product.title" class="main-image">
+      <div class="image-grid">
+        <img *ngFor="let image of product.images" 
+             [src]="image" 
+             [alt]="product.title"
+             class="thumbnail">
+      </div>
+    </div>
+
+    <div class="product-info">
+      <div class="price-section">
+        <span class="price">${{ product.price }}</span>
+        <span *ngIf="product.discountPercentage" class="discount">
+          {{ product.discountPercentage }}% OFF
+        </span>
+      </div>
+
+      <div class="stock-info">
+        <span [class]="'status'">
+          {{ product.availabilityStatus }}
+        </span>
+        <span>Stock: {{ product.stock }}</span>
+      </div>
+
+      <div class="description">
+        <h2>Description</h2>
+        <p>{{ product.description }}</p>
+      </div>
+
+      <div class="specifications">
+        <h2>Specifications</h2>
+        <ul>
+          <li><strong>SKU:</strong> {{ product.sku }}</li>
+          <li><strong>Weight:</strong> {{ product.weight }}g</li>
+          <li><strong>Dimensions:</strong> {{ product.dimensions.width }} x {{ product.dimensions.height }} x {{ product.dimensions.depth }} cm</li>
+          <li><strong>Warranty:</strong> {{ product.warrantyInformation }}</li>
+          <li><strong>Shipping:</strong> {{ product.shippingInformation }}</li>
+          <li><strong>Return Policy:</strong> {{ product.returnPolicy }}</li>
+        </ul>
+      </div>
+
+      <div class="reviews" *ngIf="product.reviews.length">
+        <h2>Reviews</h2>
+        <div class="review-list">
+          <div *ngFor="let review of product.reviews" class="review">
+            <div class="review-header">
+              <span class="reviewer">{{ review.reviewerName }}</span>
+              <span class="review-date">{{ review.date | date }}</span>
+            </div>
+            <div class="review-rating">Rating: {{ review.rating }}/5</div>
+            <p class="review-comment">{{ review.comment }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
