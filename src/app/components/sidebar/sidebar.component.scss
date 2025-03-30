@@ -1,5 +1,5 @@
 .sidebar {
-  width: 250px;
+  width: 230px;
   height: 100%;
   background-color: #ffffff;
   border-right: 1px solid #e0e0e0;
@@ -13,11 +13,16 @@
       margin: 0;
       font-size: 1.25rem;
       color: #333;
+      margin-left: 0.5rem;
     }
   }
 
   &__list {
-    padding-top: 1rem;
+    padding: 1rem 0.5rem;
+
+    a {
+      margin-top: 0.5rem;
+    }
   }
 
   &__item {
