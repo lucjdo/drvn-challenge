@@ -101,6 +101,6 @@ export class ProductTableComponent implements OnInit, OnChanges {
   }
 
   navigateToDetails(id: number): void {
-    this.router.navigate(['/product', id]);
+    this.router.navigate(['/products', id]);
   }
 }
