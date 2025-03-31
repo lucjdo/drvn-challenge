@@ -9,12 +9,19 @@
     </h2>
     <mat-form-field appearance="outline" class="table-controls__filter">
       <mat-label>Filter by product name</mat-label>
-      <input
-        matInput
-        (keyup)="applyFilter($event)"
-        placeholder="Search products..."
-        #input
-      />
+      <div class="input-container">
+        <input
+          matInput
+          (keyup)="applyFilter($event)"
+          placeholder="Search products..."
+          #input
+        />
+        <mat-spinner
+          *ngIf="isSearching"
+          diameter="20"
+          class="table-controls__spinner"
+        ></mat-spinner>
+      </div>
     </mat-form-field>
   </div>
 

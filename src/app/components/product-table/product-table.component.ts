@@ -11,6 +11,7 @@ import {
 import { CommonModule, DecimalPipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
+import { Subject, debounceTime, distinctUntilChanged, switchMap } from 'rxjs';
 
 import { MatTableModule, MatTableDataSource } from '@angular/material/table';
 import {
@@ -26,6 +27,7 @@ import { DisplayedProduct } from '@models/product-model';
 import { StockColorDirective } from '@directives/stock-color.directive';
 import { CurrencyService } from '@services/currency.service';
 import { RemoveHyphenPipe } from '@pipes/remove-hyphen.pipe';
+import { ProductService } from '@services/product.service';
 
 @Component({
   selector: 'app-product-table',
@@ -57,10 +59,13 @@ export class ProductTableComponent implements OnInit, OnChanges {
   dataSource!: MatTableDataSource<DisplayedProduct>;
   filterValue: string = '';
   pageSizeOptions: number[] = [10, 25, 50, 100];
+  private searchSubject = new Subject<string>();
+  isSearching: boolean = false;
 
   constructor(
     private router: Router,
-    public currencyService: CurrencyService
+    public currencyService: CurrencyService,
+    private productService: ProductService
   ) {}
 
   displayedColumns: string[] = [
@@ -74,6 +79,7 @@ export class ProductTableComponent implements OnInit, OnChanges {
 
   ngOnInit(): void {
     this.initializeDataSource();
+    this.setupSearchSubscription();
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -82,30 +88,43 @@ export class ProductTableComponent implements OnInit, OnChanges {
         this.initializeDataSource();
       } else {
         this.dataSource.data = this.products;
-        if (this.filterValue) {
-          this.dataSource.filter = this.filterValue.trim().toLowerCase();
-        }
       }
     }
+  }
+
+  private setupSearchSubscription(): void {
+    this.searchSubject
+      .pipe(
+        debounceTime(300),
+        distinctUntilChanged(),
+        switchMap((query) => {
+          this.isSearching = true;
+          return this.productService.searchProducts(query);
+        })
+      )
+      .subscribe({
+        next: (response) => {
+          this.products = response.products;
+          this.totalItems = response.total;
+          this.initializeDataSource();
+          this.isSearching = false;
+        },
+        error: (error) => {
+          console.error('Search failed:', error);
+          this.isSearching = false;
+        },
+      });
   }
 
   private initializeDataSource(): void {
     this.dataSource = new MatTableDataSource(this.products);
     this.dataSource.paginator = this.paginator;
-
-    if (this.filterValue) {
-      this.dataSource.filter = this.filterValue.trim().toLowerCase();
-    }
   }
 
   applyFilter(event: Event): void {
     const filterValue = (event.target as HTMLInputElement).value;
     this.filterValue = filterValue;
-    this.dataSource.filter = filterValue.trim().toLowerCase();
-
-    if (this.dataSource.paginator) {
-      this.dataSource.paginator.firstPage();
-    }
+    this.searchSubject.next(filterValue.trim());
   }
 
   getDisplayPrice(price: number): number {
