@@ -4,6 +4,11 @@ import { ProductDetailsComponent } from './components/product-details/product-de
 
 export const routes: Routes = [
   {
+    path: '',
+    redirectTo: 'products',
+    pathMatch: 'full',
+  },
+  {
     path: 'products',
     component: ProductListingComponent,
   },
