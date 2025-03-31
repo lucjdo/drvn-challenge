@@ -1,10 +1,17 @@
 .sidebar {
-  width: 230px;
+  width: 260px;
   border-right: 0.5px solid #e0e0e0;
   height: 100vh;
   padding: 1rem 0;
   position: sticky;
   top: 0;
+  overflow-y: auto;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 
   &__header {
     padding: 0 1rem 1rem;
@@ -12,6 +19,7 @@
     font-size: 3.25rem;
     color: #fafafa;
     margin-top: 18px;
+    margin-bottom: 0;
   }
 
   &__list {
@@ -30,7 +38,6 @@
   }
 
   &__currency-selector {
-    position: absolute;
     bottom: 70px;
     width: 100%;
     display: flex;
