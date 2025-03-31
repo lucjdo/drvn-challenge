@@ -7,7 +7,7 @@ import { MatIconModule } from '@angular/material/icon';
 
 import { Category } from '@models/product-model';
 import { CurrencySelectorComponent } from '@components/currency-selector/currency-selector.component';
-import { CategoryLabelPipe } from '@pipes/category-label.pipe';
+import { RemoveHyphenPipe } from '@pipes/remove-hyphen.pipe';
 
 @Component({
   selector: 'app-sidebar',
@@ -18,7 +18,7 @@ import { CategoryLabelPipe } from '@pipes/category-label.pipe';
     MatIconModule,
     RouterModule,
     CurrencySelectorComponent,
-    CategoryLabelPipe,
+    RemoveHyphenPipe,
   ],
   templateUrl: './sidebar.component.html',
   styleUrls: ['./sidebar.component.scss'],

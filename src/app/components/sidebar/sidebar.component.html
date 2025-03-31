@@ -14,9 +14,7 @@
       class="sidebar__item"
     >
       <mat-icon matListItemIcon>{{ getCategoryIcon(category) }}</mat-icon>
-      <span matListItemTitle>{{ category | categoryLabel }}</span>
+      <span matListItemTitle>{{ category | removeHyphen | titlecase }}</span>
     </a>
   </mat-nav-list>
-
-  
 </nav>
