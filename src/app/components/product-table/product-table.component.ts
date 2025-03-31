@@ -5,9 +5,15 @@ import {
   OnInit,
   OnChanges,
   SimpleChanges,
+  Output,
+  EventEmitter,
 } from '@angular/core';
 import { MatTableModule, MatTableDataSource } from '@angular/material/table';
-import { MatPaginatorModule, MatPaginator } from '@angular/material/paginator';
+import {
+  MatPaginatorModule,
+  MatPaginator,
+  PageEvent,
+} from '@angular/material/paginator';
 import { DisplayedProduct } from '../../models/product-model';
 import { StockColorDirective } from '../../directives/stock-color.directive';
 import { DecimalPipe, CommonModule } from '@angular/common';
@@ -16,6 +22,7 @@ import { FormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { CurrencyService } from '../../services/currency.service';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @Component({
   selector: 'app-product-table',
@@ -29,6 +36,7 @@ import { CurrencyService } from '../../services/currency.service';
     FormsModule,
     MatFormFieldModule,
     MatInputModule,
+    MatProgressSpinnerModule,
   ],
   templateUrl: './product-table.component.html',
   styleUrls: ['./product-table.component.scss'],
@@ -36,12 +44,15 @@ import { CurrencyService } from '../../services/currency.service';
 export class ProductTableComponent implements OnInit, OnChanges {
   @Input() products: DisplayedProduct[] = [];
   @Input() category: string = '';
+  @Input() totalItems: number = 0;
+  @Input() pageSize: number = 10;
+  @Input() currentPage: number = 1;
+  @Output() pageChange = new EventEmitter<PageEvent>();
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
-  pageSize = 10;
-  pageSizeOptions: number[] = [10, 25, 50, 100];
   dataSource!: MatTableDataSource<DisplayedProduct>;
   filterValue: string = '';
+  pageSizeOptions: number[] = [10, 25, 50, 100];
 
   constructor(
     private router: Router,
@@ -55,7 +66,6 @@ export class ProductTableComponent implements OnInit, OnChanges {
     'price',
     'stock',
     'rating',
-    // 'actions',
   ];
 
   ngOnInit(): void {
@@ -64,7 +74,14 @@ export class ProductTableComponent implements OnInit, OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['products'] && !changes['products'].firstChange) {
-      this.initializeDataSource();
+      if (!this.dataSource) {
+        this.initializeDataSource();
+      } else {
+        this.dataSource.data = this.products;
+        if (this.filterValue) {
+          this.dataSource.filter = this.filterValue.trim().toLowerCase();
+        }
+      }
     }
   }
 
@@ -96,7 +113,10 @@ export class ProductTableComponent implements OnInit, OnChanges {
   }
 
   navigateToDetails(id: number): void {
-    console.log('navigateToDetails', id);
     this.router.navigate(['/products', id]);
+  }
+
+  onPageChange(event: PageEvent): void {
+    this.pageChange.emit(event);
   }
 }

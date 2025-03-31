@@ -87,8 +87,11 @@
   </table>
 
   <mat-paginator
-    [pageSizeOptions]="pageSizeOptions"
+    [length]="totalItems"
     [pageSize]="pageSize"
+    [pageSizeOptions]="pageSizeOptions"
+    [pageIndex]="currentPage - 1"
+    (page)="onPageChange($event)"
     showFirstLastButtons
     aria-label="Select page of products"
   >
