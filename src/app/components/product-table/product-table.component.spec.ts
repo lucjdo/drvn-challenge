@@ -4,17 +4,18 @@ import {
   fakeAsync,
   tick,
 } from '@angular/core/testing';
-import { ProductTableComponent } from './product-table.component';
 import { Router } from '@angular/router';
-import { CurrencyService } from '@services/currency.service';
-import { DisplayedProduct } from '@models/product-model';
+import { DecimalPipe } from '@angular/common';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
-import { FormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { DecimalPipe } from '@angular/common';
+
+import { CurrencyService } from '@services/currency.service';
+import { DisplayedProduct } from '@models/product-model';
+import { ProductTableComponent } from './product-table.component';
 
 describe('ProductTableComponent', () => {
   let component: ProductTableComponent;
@@ -53,7 +54,6 @@ describe('ProductTableComponent', () => {
         ProductTableComponent,
         MatTableModule,
         MatPaginatorModule,
-        FormsModule,
         MatFormFieldModule,
         MatInputModule,
         BrowserAnimationsModule,
