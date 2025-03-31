@@ -1,9 +1,11 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Category } from '@models/product-model';
+import { RouterModule } from '@angular/router';
+
 import { MatListModule } from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
-import { RouterModule } from '@angular/router';
+
+import { Category } from '@models/product-model';
 import { CurrencySelectorComponent } from '@components/currency-selector/currency-selector.component';
 import { CategoryLabelPipe } from '@pipes/category-label.pipe';
 

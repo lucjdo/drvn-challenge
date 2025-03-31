@@ -1,6 +1,7 @@
 import { Injectable, PLATFORM_ID, Inject } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
 import { isPlatformBrowser } from '@angular/common';
+
+import { BehaviorSubject } from 'rxjs';
 
 export type Currency = 'USD' | 'EUR';
 

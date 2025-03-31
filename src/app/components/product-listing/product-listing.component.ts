@@ -1,12 +1,13 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ProductTableComponent } from '@components/product-table/product-table.component';
-import { ProductService } from '@services/product.service';
-import { DisplayedProduct } from '@models/product-model';
 import { ActivatedRoute } from '@angular/router';
-import { Category } from '@models/product-model';
+
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+
+import { Category, DisplayedProduct } from '@models/product-model';
+import { ProductTableComponent } from '@components/product-table/product-table.component';
+import { ProductService } from '@services/product.service';
 
 @Component({
   selector: 'app-product-listing',

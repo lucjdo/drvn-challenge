@@ -8,21 +8,23 @@ import {
   Output,
   EventEmitter,
 } from '@angular/core';
+import { CommonModule, DecimalPipe } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
+
 import { MatTableModule, MatTableDataSource } from '@angular/material/table';
 import {
   MatPaginatorModule,
   MatPaginator,
   PageEvent,
 } from '@angular/material/paginator';
-import { DisplayedProduct } from '@models/product-model';
-import { StockColorDirective } from '@directives/stock-color.directive';
-import { DecimalPipe, CommonModule } from '@angular/common';
-import { Router } from '@angular/router';
-import { FormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { CurrencyService } from '@services/currency.service';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+
+import { DisplayedProduct } from '@models/product-model';
+import { StockColorDirective } from '@directives/stock-color.directive';
+import { CurrencyService } from '@services/currency.service';
 
 @Component({
   selector: 'app-product-table',
