@@ -25,6 +25,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { DisplayedProduct } from '@models/product-model';
 import { StockColorDirective } from '@directives/stock-color.directive';
 import { CurrencyService } from '@services/currency.service';
+import { RemoveHyphenPipe } from '@pipes/remove-hyphen.pipe';
 
 @Component({
   selector: 'app-product-table',
@@ -39,6 +40,7 @@ import { CurrencyService } from '@services/currency.service';
     MatFormFieldModule,
     MatInputModule,
     MatProgressSpinnerModule,
+    RemoveHyphenPipe,
   ],
   templateUrl: './product-table.component.html',
   styleUrls: ['./product-table.component.scss'],
