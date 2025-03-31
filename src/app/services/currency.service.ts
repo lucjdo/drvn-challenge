@@ -31,7 +31,7 @@ export class CurrencyService {
       return 'USD';
     }
     const stored = localStorage.getItem(this.STORAGE_KEY);
-    return (stored as Currency) || 'USD';
+    return stored === 'EUR' || stored === 'USD' ? (stored as Currency) : 'USD';
   }
 
   setCurrency(currency: Currency): void {
