@@ -4,7 +4,7 @@
       {{
         category === "all"
           ? "All products"
-          : (category | titlecase) + " Products"
+          : (category | titlecase | removeHyphen)
       }}
     </h2>
     <mat-form-field appearance="outline" class="table-controls__filter">
