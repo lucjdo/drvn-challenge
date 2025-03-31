@@ -15,4 +15,8 @@ export class CurrencySelectorComponent {
   setCurrency(currency: Currency): void {
     this.currencyService.setCurrency(currency);
   }
+
+  getCurrentCurrency(): Currency {
+    return this.currencyService.getCurrentCurrency();
+  }
 }
