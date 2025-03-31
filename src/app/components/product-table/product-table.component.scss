@@ -16,6 +16,12 @@
     &__filter {
       width: 100%;
       max-width: 400px;
+
+      .input-container {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+      }
     }
 
     &__title {

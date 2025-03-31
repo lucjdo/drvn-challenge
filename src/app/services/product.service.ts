@@ -58,4 +58,13 @@ export class ProductService {
     const updatedProduct = { ...product, ...updates };
     return of(updatedProduct);
   }
+
+  /**
+   * Search products by query
+   * @param query The search query
+   * @returns Observable of ProductResponse containing search results
+   */
+  searchProducts(query: string): Observable<ProductResponse> {
+    return this.http.get<ProductResponse>(`${this.apiUrl}/search?q=${query}`);
+  }
 }
