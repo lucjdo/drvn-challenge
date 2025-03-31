@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
-import { CurrencyService, Currency } from '../../services/currency.service';
+import { CurrencyService, Currency } from '@services/currency.service';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 
 @Component({

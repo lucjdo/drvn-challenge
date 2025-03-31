@@ -1,17 +1,17 @@
 import { Component, OnInit, SimpleChanges } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { ProductService } from '../../services/product.service';
-import { Product } from '../../models/product-model';
+import { ProductService } from '@services/product.service';
+import { Product } from '@models/product-model';
 import { MatDialog } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { ProductEditModalComponent } from '../product-edit-modal/product-edit-modal.component';
+import { ProductEditModalComponent } from '@components/product-edit-modal/product-edit-modal.component';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { FloorPipe } from '../../pipes/floor.pipe';
-import { CurrencyService } from '../../services/currency.service';
-import { StockColorDirective } from '../../directives/stock-color.directive';
+import { FloorPipe } from '@pipes/floor.pipe';
+import { CurrencyService } from '@services/currency.service';
+import { StockColorDirective } from '@directives/stock-color.directive';
 
 @Component({
   selector: 'app-product-details',

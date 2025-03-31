@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { Category } from '../models/product-model';
+import { Category } from '@models/product-model';
 
 @Pipe({
   name: 'categoryLabel',
