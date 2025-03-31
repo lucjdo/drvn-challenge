@@ -1,6 +1,10 @@
 <nav class="sidebar">
   <h3 class="sidebar__header">drvn</h3>
 
+  <div class="sidebar__currency-selector">
+    <app-currency-selector></app-currency-selector>
+  </div>
+
   <mat-nav-list class="sidebar__list">
     <a
       mat-list-item
@@ -10,11 +14,9 @@
       class="sidebar__item"
     >
       <mat-icon matListItemIcon>{{ getCategoryIcon(category) }}</mat-icon>
-      <span matListItemTitle>{{ getCategoryLabel(category) }}</span>
+      <span matListItemTitle>{{ category | categoryLabel }}</span>
     </a>
   </mat-nav-list>
 
-  <div class="sidebar__currency-selector">
-    <app-currency-selector></app-currency-selector>
-  </div>
+  
 </nav>

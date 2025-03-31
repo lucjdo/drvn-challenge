@@ -1,3 +1,14 @@
 <div class="product-listing">
-  <app-product-table [products]="products" [category]="currentCategory"></app-product-table>
+  <div *ngIf="loading" class="product-listing__loading-overlay">
+    <mat-spinner diameter="50"></mat-spinner>
+  </div>
+
+  <app-product-table
+    [products]="products"
+    [category]="currentCategory"
+    [totalItems]="totalItems"
+    [pageSize]="pageSize"
+    [currentPage]="currentPage"
+    (pageChange)="onPageChange($event)"
+  ></app-product-table>
 </div> 
