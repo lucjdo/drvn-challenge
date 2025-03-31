@@ -7,25 +7,21 @@ import {
   SimpleChanges,
 } from '@angular/core';
 import { MatTableModule, MatTableDataSource } from '@angular/material/table';
-import {
-  MatPaginatorModule,
-  MatPaginator,
-  PageEvent,
-} from '@angular/material/paginator';
+import { MatPaginatorModule, MatPaginator } from '@angular/material/paginator';
 import { DisplayedProduct } from '../../models/product-model';
 import { StockColorDirective } from '../../directives/stock-color.directive';
-import { DecimalPipe } from '@angular/common';
+import { DecimalPipe, CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { CurrencyService } from '../../services/currency.service';
-import { CurrencySelectorComponent } from '../currency-selector/currency-selector.component';
 
 @Component({
   selector: 'app-product-table',
   standalone: true,
   imports: [
+    CommonModule,
     MatTableModule,
     MatPaginatorModule,
     StockColorDirective,
@@ -33,13 +29,13 @@ import { CurrencySelectorComponent } from '../currency-selector/currency-selecto
     FormsModule,
     MatFormFieldModule,
     MatInputModule,
-    CurrencySelectorComponent,
   ],
   templateUrl: './product-table.component.html',
   styleUrls: ['./product-table.component.scss'],
 })
 export class ProductTableComponent implements OnInit, OnChanges {
   @Input() products: DisplayedProduct[] = [];
+  @Input() category: string = '';
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   pageSize = 10;
@@ -59,7 +55,7 @@ export class ProductTableComponent implements OnInit, OnChanges {
     'price',
     'stock',
     'rating',
-    'actions',
+    // 'actions',
   ];
 
   ngOnInit(): void {
@@ -76,7 +72,6 @@ export class ProductTableComponent implements OnInit, OnChanges {
     this.dataSource = new MatTableDataSource(this.products);
     this.dataSource.paginator = this.paginator;
 
-    // Apply existing filter if any
     if (this.filterValue) {
       this.dataSource.filter = this.filterValue.trim().toLowerCase();
     }
@@ -101,6 +96,7 @@ export class ProductTableComponent implements OnInit, OnChanges {
   }
 
   navigateToDetails(id: number): void {
+    console.log('navigateToDetails', id);
     this.router.navigate(['/products', id]);
   }
 }

@@ -4,11 +4,18 @@ import { Category } from '../../models/product-model';
 import { MatListModule } from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
 import { RouterModule } from '@angular/router';
+import { CurrencySelectorComponent } from '../currency-selector/currency-selector.component';
 
 @Component({
   selector: 'app-sidebar',
   standalone: true,
-  imports: [CommonModule, MatListModule, MatIconModule, RouterModule],
+  imports: [
+    CommonModule,
+    MatListModule,
+    MatIconModule,
+    RouterModule,
+    CurrencySelectorComponent,
+  ],
   templateUrl: './sidebar.component.html',
   styleUrls: ['./sidebar.component.scss'],
 })

@@ -7,11 +7,23 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ProductEditModalComponent } from '../product-edit-modal/product-edit-modal.component';
+import { MatIconModule } from '@angular/material/icon';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { FloorPipe } from '../../pipes/floor.pipe';
+import { CurrencyService } from '../../services/currency.service';
+import { StockColorDirective } from '../../directives/stock-color.directive';
 
 @Component({
   selector: 'app-product-details',
   standalone: true,
-  imports: [CommonModule, MatButtonModule],
+  imports: [
+    CommonModule,
+    MatButtonModule,
+    MatIconModule,
+    MatProgressSpinnerModule,
+    FloorPipe,
+    StockColorDirective,
+  ],
   templateUrl: './product-details.component.html',
   styleUrl: './product-details.component.scss',
 })
@@ -24,7 +36,8 @@ export class ProductDetailsComponent implements OnInit {
     private route: ActivatedRoute,
     private productService: ProductService,
     private dialog: MatDialog,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    public currencyService: CurrencyService
   ) {}
 
   ngOnInit(): void {
@@ -89,5 +102,13 @@ export class ProductDetailsComponent implements OnInit {
         this.updateProduct(result);
       }
     });
+  }
+
+  getDisplayPrice(price: number): number {
+    return this.currencyService.convertPrice(price);
+  }
+
+  getCurrencySymbol(): string {
+    return this.currencyService.getCurrencySymbol();
   }
 }

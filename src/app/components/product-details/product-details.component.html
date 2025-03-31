@@ -1,79 +1,150 @@
 <div class="product-details">
-  <div *ngIf="loading" class="loading">
-    Loading product details...
+  <div *ngIf="loading" class="product-details__loading">
+    <mat-spinner diameter="50"></mat-spinner>
   </div>
 
-  <div *ngIf="error" class="error">
+  <div *ngIf="error" class="product-details__error">
     {{ error }}
   </div>
 
-  <div *ngIf="product" class="product-content">
-    <div class="product-header">
-      <div class="header-content">
-        <h1>{{ product.title }}</h1>
+  <div *ngIf="product">
+    <div class="product-details__header">
+      <div class="product-details__info">
+        <h1 [appStockColor]="product.stock">{{ product.title }}</h1>
+
+        <span class="product-details__rating">
+          <span>{{ product.rating || 0 }}/5</span>
+          <span>
+            <mat-icon
+              class="rating-stars"
+              *ngFor="
+                let star of [].constructor(
+                  product.rating ?? 0 | number : '1.0-0' | floor
+                )
+              "
+              fontIcon="star"
+            ></mat-icon>
+          </span>
+          <span> ({{ product.reviews.length || 0 }}) </span>
+        </span>
+
+        <div class="product-details__price-section">
+          <span class="product-details__price-amount">
+            {{ getCurrencySymbol()
+            }}{{ getDisplayPrice(product.price) | number : "1.2-2" }}
+          </span>
+
+          <span
+            *ngIf="product.discountPercentage"
+            class="product-details__price-discount"
+          >
+            {{ product.discountPercentage }}% OFF
+          </span>
+        </div>
+
+        <div class="product-details__stock">
+          <span>
+            <ng-container *ngIf="product.stock > 0; else outOfStock">
+              {{ product.stock }} items available
+            </ng-container>
+            <ng-template #outOfStock> Currently out of stock </ng-template>
+          </span>
+        </div>
+
+        <div class="product-details__specifications">
+          <h2 class="product-details__specifications-title">Specifications</h2>
+          <ul class="product-details__specifications-list">
+            <li class="product-details__specifications-item">
+              <strong class="product-details__specifications-label"
+                >SKU:</strong
+              >
+              {{ product.sku }}
+            </li>
+            <li class="product-details__specifications-item">
+              <strong class="product-details__specifications-label"
+                >Weight:</strong
+              >
+              {{ product.weight }}
+            </li>
+            <li class="product-details__specifications-item">
+              <strong class="product-details__specifications-label"
+                >Dimensions:</strong
+              >
+              {{ product.dimensions.width }} x {{ product.dimensions.height }} x
+              {{ product.dimensions.depth }} cm
+            </li>
+            <li class="product-details__specifications-item">
+              <strong class="product-details__specifications-label"
+                >Warranty:</strong
+              >
+              {{ product.warrantyInformation }}
+            </li>
+            <li class="product-details__specifications-item">
+              <strong class="product-details__specifications-label"
+                >Shipping:</strong
+              >
+              {{ product.shippingInformation }}
+            </li>
+            <li class="product-details__specifications-item">
+              <strong class="product-details__specifications-label"
+                >Return Policy:</strong
+              >
+              {{ product.returnPolicy }}
+            </li>
+          </ul>
+        </div>
+
         <button mat-raised-button color="primary" (click)="openEditModal()">
           Edit Product
         </button>
       </div>
-      <div class="product-meta">
-        <span class="brand">{{ product.brand }}</span>
-        <span class="category">{{ product.category }}</span>
-        <span class="rating">Rating: {{ product.rating }}/5</span>
+
+      <div class="product-details__gallery">
+        <img
+          [src]="product.thumbnail"
+          [alt]="product.title"
+          class="product-details__gallery-image"
+        />
+
+        <div class="product-details__gallery-grid">
+          <img
+            *ngFor="let image of product.images"
+            [src]="image"
+            [alt]="product.title"
+            class="product-details__gallery-thumbnail"
+          />
+        </div>
       </div>
     </div>
 
-    <div class="product-gallery">
-      <img [src]="product.thumbnail" [alt]="product.title" class="main-image">
-      <div class="image-grid">
-        <img *ngFor="let image of product.images" 
-             [src]="image" 
-             [alt]="product.title"
-             class="thumbnail">
-      </div>
+    <div class="product-details__description">
+      <h2 class="product-details__description-title">Description</h2>
+      <p class="product-details__description-text">
+        {{ product.description || "No description available" }}
+      </p>
     </div>
+    <div class="product-details__reviews" *ngIf="product?.reviews?.length">
+      <h2 class="product-details__reviews-title">Reviews</h2>
+      <div class="product-details__reviews-list">
+        <div *ngFor="let review of product?.reviews" class="review">
+          <div class="product-details__reviews-header">
+            <span class="product-details__reviews-author">{{
+              review.reviewerName
+            }}</span>
+            <span class="product-details__reviews-date">{{
+              review.date | date
+            }}</span>
+          </div>
 
-    <div class="product-info">
-      <div class="price-section">
-        <span class="price">${{ product.price }}</span>
-        <span *ngIf="product.discountPercentage" class="discount">
-          {{ product.discountPercentage }}% OFF
-        </span>
-      </div>
+          <p class="product-details__reviews-comment">{{ review.comment }}</p>
 
-      <div class="stock-info">
-        <span [class]="'status'">
-          {{ product.availabilityStatus }}
-        </span>
-        <span>Stock: {{ product.stock }}</span>
-      </div>
-
-      <div class="description">
-        <h2>Description</h2>
-        <p>{{ product.description }}</p>
-      </div>
-
-      <div class="specifications">
-        <h2>Specifications</h2>
-        <ul>
-          <li><strong>SKU:</strong> {{ product.sku }}</li>
-          <li><strong>Weight:</strong> {{ product.weight }}g</li>
-          <li><strong>Dimensions:</strong> {{ product.dimensions.width }} x {{ product.dimensions.height }} x {{ product.dimensions.depth }} cm</li>
-          <li><strong>Warranty:</strong> {{ product.warrantyInformation }}</li>
-          <li><strong>Shipping:</strong> {{ product.shippingInformation }}</li>
-          <li><strong>Return Policy:</strong> {{ product.returnPolicy }}</li>
-        </ul>
-      </div>
-
-      <div class="reviews" *ngIf="product.reviews.length">
-        <h2>Reviews</h2>
-        <div class="review-list">
-          <div *ngFor="let review of product.reviews" class="review">
-            <div class="review-header">
-              <span class="reviewer">{{ review.reviewerName }}</span>
-              <span class="review-date">{{ review.date | date }}</span>
-            </div>
-            <div class="review-rating">Rating: {{ review.rating }}/5</div>
-            <p class="review-comment">{{ review.comment }}</p>
+          <div class="product-details__reviews-rating">
+            <mat-icon
+              *ngFor="let star of [].constructor(review.rating)"
+              aria-hidden="false"
+              aria-label="Star rating"
+              fontIcon="star"
+            ></mat-icon>
           </div>
         </div>
       </div>

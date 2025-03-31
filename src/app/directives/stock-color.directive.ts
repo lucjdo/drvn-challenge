@@ -15,11 +15,11 @@ export class StockColorDirective implements OnInit {
 
   private updateColor(): void {
     if (this.appStockColor === 0) {
-      this.el.nativeElement.style.color = 'red';
+      this.el.nativeElement.style.color = '#ff6b6b';
     } else if (this.appStockColor < 50) {
-      this.el.nativeElement.style.color = 'yellow';
+      this.el.nativeElement.style.color = '#ffd700';
     } else {
-      this.el.nativeElement.style.color = 'blue';
+      this.el.nativeElement.style.color = '#4dabf7';
     }
   }
 }
