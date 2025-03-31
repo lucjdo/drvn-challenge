@@ -6,8 +6,8 @@ import {
 } from '@angular/core/testing';
 import { ProductTableComponent } from './product-table.component';
 import { Router } from '@angular/router';
-import { CurrencyService } from '../../services/currency.service';
-import { DisplayedProduct } from '../../models/product-model';
+import { CurrencyService } from '@services/currency.service';
+import { DisplayedProduct } from '@models/product-model';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { FormsModule } from '@angular/forms';

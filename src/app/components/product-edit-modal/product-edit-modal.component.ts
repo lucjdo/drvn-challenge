@@ -9,7 +9,7 @@ import {
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
-import { Product } from '../../models/product-model';
+import { Product } from '@models/product-model';
 
 @Component({
   selector: 'app-product-edit-modal',

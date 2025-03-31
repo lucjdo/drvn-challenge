@@ -14,14 +14,14 @@ import {
   MatPaginator,
   PageEvent,
 } from '@angular/material/paginator';
-import { DisplayedProduct } from '../../models/product-model';
-import { StockColorDirective } from '../../directives/stock-color.directive';
+import { DisplayedProduct } from '@models/product-model';
+import { StockColorDirective } from '@directives/stock-color.directive';
 import { DecimalPipe, CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { CurrencyService } from '../../services/currency.service';
+import { CurrencyService } from '@services/currency.service';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @Component({

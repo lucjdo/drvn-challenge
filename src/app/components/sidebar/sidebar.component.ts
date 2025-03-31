@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Category } from '../../models/product-model';
+import { Category } from '@models/product-model';
 import { MatListModule } from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
 import { RouterModule } from '@angular/router';
-import { CurrencySelectorComponent } from '../currency-selector/currency-selector.component';
-import { CategoryLabelPipe } from '../../pipes/category-label.pipe';
+import { CurrencySelectorComponent } from '@components/currency-selector/currency-selector.component';
+import { CategoryLabelPipe } from '@pipes/category-label.pipe';
 
 @Component({
   selector: 'app-sidebar',
