@@ -1,16 +1,20 @@
 <nav class="sidebar">
-  <div class="sidebar__header">
-    <h3>drvn</h3>
-  </div>
-  
+  <h3 class="sidebar__header">drvn</h3>
+
   <mat-nav-list class="sidebar__list">
-    <a mat-list-item 
-       *ngFor="let category of categories" 
-       [routerLink]="['/products']" 
-       [queryParams]="{ category: category }"
-       class="sidebar__item">
+    <a
+      mat-list-item
+      *ngFor="let category of categories"
+      [routerLink]="['/products']"
+      [queryParams]="{ category: category }"
+      class="sidebar__item"
+    >
       <mat-icon matListItemIcon>{{ getCategoryIcon(category) }}</mat-icon>
       <span matListItemTitle>{{ getCategoryLabel(category) }}</span>
     </a>
   </mat-nav-list>
-</nav> 
+
+  <div class="sidebar__currency-selector">
+    <app-currency-selector></app-currency-selector>
+  </div>
+</nav>
